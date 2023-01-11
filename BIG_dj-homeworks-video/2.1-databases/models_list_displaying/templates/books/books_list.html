@@ -7,17 +7,32 @@
         <div class="header">
             <h1><a href="/books">Каталог</a></h1>
         </div>
-        <div class="row">
-            <div class="book col-md-4">
-                <h2>Сияние</h2>
-                <p>Автор: Стивен Кинг</p>
-                <p>Дата публикации: 2018-09-10</p>
-            </div>
-            <div class="book col-md-4">
-                <h2>1984</h2>
-                <p>Автор: Джордж Оруэл</p>
-                <p>Дата публикации: 2015-03-11</p>
-            </div>
+        <div class="sort-block">
+            <span class="sort-item">Сортировать по:</span>
+            <a class="sort-item" href="{% url 'sort_name' %}">названию; </a>
+            <a class="sort-item" href="{% url 'sort_date_new' %}">начиная со старых изданий; </a>
+            <a class="sort-item" href="{% url 'sort_date_old' %}">начиная с новых изданий; </a>
         </div>
+
+        <div class="row">
+
+            {% for book in books %}
+
+            <div class="book col-md-4">
+                <h2>{{ book.name }}</h2>
+                <p>{{ book.author }}</p>
+                <p>Дата публикации: {{ book.pub_date }}</p>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        {% if prev_page %}
+            <a style="margin-right: 50px;" href="{% url 'date' prev_page %}"> {{ prev_page }} предыдущая страница</a>
+        {% endif %}
+        {% if next_page %}
+            <a href="{% url 'date' next_page %}">{{ next_page }} следующая страница </a>
+        {% endif %}
     </div>
+
 {% endblock %}
